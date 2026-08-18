@@ -1,0 +1,302 @@
+/* Typography Specifications */
+/* Primary: Helvetica, Arial, sans-serif */
+/* Secondary: Andale Mono, Monaco, "Courier New", monospace */
+
+:root {
+    --bg-color: #E6B8C2; /* Soft light pink */
+    --active-color: #8EBDA6; /* Muted mint/sage green */
+    --border-color: #000000;
+    --text-color: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px; /* Mobile-first proportions */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 40px 0;
+}
+
+/* Typography Classes */
+.font-primary { font-family: Helvetica, Arial, sans-serif; }
+.font-secondary { font-family: "Andale Mono", Monaco, "Courier New", monospace; }
+
+h1, h2, h3 { font-family: Helvetica, Arial, sans-serif; }
+
+/* Reusable UI Components */
+.divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 20px 0;
+    width: 100%;
+}
+
+button {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 0; /* Brutalist sharp rectangles */
+    color: var(--text-color);
+    cursor: pointer;
+    font-family: Helvetica, Arial, sans-serif;
+    transition: background-color 0.2s ease;
+}
+
+button:focus { outline: none; }
+
+/* Active States */
+button.selected {
+    background-color: var(--active-color) !important;
+}
+
+/* Screens */
+.screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+    height: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Screen 1: Welcome */
+.welcome-screen .main-title {
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+/* Simulate the outlined text from the mockup for "mood-board, design brief" */
+.welcome-screen .main-title {
+    -webkit-text-stroke: 1px var(--text-color);
+    color: transparent;
+    font-size: 38px;
+}
+
+.welcome-screen .subtitle {
+    font-size: 11px;
+    margin-bottom: 50px;
+    text-align: right;
+    letter-spacing: 0.5px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.intro-box {
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 60px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.category-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.category-desc {
+    font-size: 11px;
+    margin-bottom: 60px;
+    line-height: 1.5;
+}
+
+.cta-button {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    font-weight: bold;
+    padding: 15px 20px;
+    width: 100%;
+    font-size: 14px;
+    text-align: right;
+    margin-top: auto;
+}
+.cta-button:hover {
+    background-color: #333;
+}
+
+/* Screen 2 & 3: Questions */
+.top-glyph {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.question-screen .subtitle {
+    font-size: 11px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.section-lead {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    line-height: 1.2;
+    text-align: right;
+    padding-left: 20px;
+}
+
+.question-prompt {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.option-button {
+    width: 100%;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    margin-bottom: -1px; /* Overlap borders */
+}
+
+.option-button.image-option {
+    text-align: center;
+}
+
+.image-container {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bottom-controls {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.back-button {
+    width: max-content;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.clear-button {
+    width: 100%;
+    padding: 5px;
+    font-size: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Screen 4: Completion */
+.completion-screen {
+    padding-top: 60px;
+}
+
+.completion-header {
+    text-align: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 60px;
+}
+
+.completion-header span {
+    font-size: 12px;
+    font-weight: normal;
+    display: block;
+    margin-top: 5px;
+}
+
+.hero-heading {
+    font-size: 56px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    -webkit-text-stroke: 1px var(--text-color);
+    color: transparent;
+    text-align: left;
+    letter-spacing: -1px;
+}
+
+.confirmation-text {
+    font-size: 11px;
+    text-align: left;
+    line-height: 1.5;
+    margin-bottom: 60px;
+    max-width: 90%;
+}
+
+.centered-glyph {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 60px;
+}
+
+.contact-info {
+    font-size: 10px;
+    text-align: right;
+    margin-top: auto;
+    line-height: 1.5;
+}
+
+.share-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    font-weight: bold;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    text-align: center;
+}
