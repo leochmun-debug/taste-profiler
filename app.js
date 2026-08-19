@@ -31,10 +31,10 @@ const textQuestions = [
     {
         id: 1,
         type: "text",
-        question: "¿qué marca es más de tu preferencia si vas a usar un traje para una grad del Tec?",
+        question: "¿qué marca es más de tu gusto para usar en una grad del Tec?",
         options: ["GUCCI", "HUGO BOSS"],
         label: "fashion",
-        prompt: "¿qué marca es más de tu preferencia si vas a usar un traje para una grad del Tec?"
+        prompt: "¿qué marca es más<br>de tu gusto para<br>usar en una grad<br>del Tec?"
     },
     {
         id: 2,
