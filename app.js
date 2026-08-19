@@ -159,24 +159,10 @@ window.startBrief = function() {
     render();
 }
 
-// Glyph Component (Top right cross-like pixel art from mockup)
+// Glyph Component (Logo from user's assets)
 const getGlyph = () => `
     <div class="top-glyph">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="5" width="5" height="5" fill="#0b454f"/>
-            <rect x="20" y="10" width="5" height="5" fill="#0b454f"/>
-            <rect x="15" y="15" width="5" height="5" fill="#0b454f"/>
-            <rect x="20" y="15" width="5" height="5" fill="#0b454f"/>
-            <rect x="25" y="15" width="5" height="5" fill="#0b454f"/>
-            <rect x="30" y="15" width="5" height="5" fill="#0b454f"/>
-            <rect x="10" y="20" width="5" height="5" fill="#0b454f"/>
-            <rect x="15" y="20" width="5" height="5" fill="#0b454f"/>
-            <rect x="20" y="20" width="5" height="5" fill="#0b454f"/>
-            <rect x="25" y="20" width="5" height="5" fill="#0b454f"/>
-            <rect x="20" y="25" width="5" height="5" fill="#0b454f"/>
-            <rect x="25" y="25" width="5" height="5" fill="#0b454f"/>
-            <rect x="20" y="30" width="5" height="5" fill="#0b454f"/>
-        </svg>
+        <img src="./images/logo.png" alt="Logo" style="width: 45px; height: auto; object-fit: contain;">
     </div>
 `;
 
