@@ -417,10 +417,12 @@ function renderCompletion() {
         
         <button id="formspree-btn" class="share-btn font-primary" onclick="submitToFormspree()">Send Answers to Designer</button>
         
-        <div class="contact-info font-secondary" style="margin-top: 20px;">
+        <div class="contact-info font-secondary" style="margin-top: 20px; margin-bottom: 20px;">
             contact info. leo.ch.mun@gmail.com<br>
             +52 2282 88 8275
         </div>
+
+        <button class="clear-button font-secondary" onclick="clearState()">restart brief / clear answers</button>
     `;
     
     appContainer.appendChild(screen);
