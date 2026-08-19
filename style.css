@@ -99,7 +99,7 @@ button.selected {
 .welcome-screen .subtitle {
     font-size: 11px;
     margin-bottom: 50px;
-    text-align: left;
+    text-align: right;
     letter-spacing: 0.5px;
 }
 
@@ -138,7 +138,7 @@ button.selected {
     padding: 15px 20px;
     width: 100%;
     font-size: 14px;
-    text-align: left;
+    text-align: right;
     margin-top: auto;
 }
 .cta-button:hover {
@@ -156,7 +156,7 @@ button.selected {
     font-size: 11px;
     margin-top: 50px;
     margin-bottom: 30px;
-    text-align: left;
+    text-align: right;
 }
 
 .section-lead {
@@ -164,8 +164,8 @@ button.selected {
     font-weight: bold;
     margin-bottom: 40px;
     line-height: 1.2;
-    text-align: left;
-    padding-right: 20px;
+    text-align: right;
+    padding-left: 20px;
 }
 
 .question-prompt {
@@ -173,7 +173,7 @@ button.selected {
     font-weight: bold;
     margin-bottom: 20px;
     display: block;
-    text-align: left;
+    text-align: right;
 }
 
 .options-container {
@@ -245,7 +245,7 @@ button.selected {
 }
 
 .completion-header {
-    text-align: left;
+    text-align: right;
     font-size: 28px;
     font-weight: bold;
     line-height: 1.1;
@@ -286,7 +286,7 @@ button.selected {
 
 .contact-info {
     font-size: 10px;
-    text-align: left;
+    text-align: right;
     margin-top: auto;
     line-height: 1.5;
 }
