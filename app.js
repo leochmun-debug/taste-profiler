@@ -251,7 +251,7 @@ function renderQuestion(q) {
     if (q.type === 'text') {
         contentHtml = `
             <div class="question-prompt font-primary">
-                ${q.prompt.split(' ').map(word => `<span>${word}</span>`).join(' ')}
+                ${q.prompt}
             </div>
             <div class="options-container">
                 ${q.options.map(opt => `
@@ -262,8 +262,8 @@ function renderQuestion(q) {
         `;
     } else if (q.type === 'image') {
         contentHtml = `
-            <div class="question-prompt font-primary" style="justify-content: flex-end;">
-                <span>${q.prompt}</span>
+            <div class="question-prompt font-primary">
+                ${q.prompt}
             </div>
             <div class="image-container">
                 <img src="${q.image}" alt="Reference Image" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
@@ -277,7 +277,7 @@ function renderQuestion(q) {
         `;
     } else if (q.type === 'image-choice') {
         contentHtml = `
-            <div class="question-prompt font-primary" style="display: block; text-align: right; line-height: 1.3;">
+            <div class="question-prompt font-primary">
                 ${q.prompt}
             </div>
             <div class="options-container" style="flex-direction: row; gap: 10px; margin-top: 20px;">
