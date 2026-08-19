@@ -324,7 +324,7 @@ function renderQuestion(q) {
                 
                 ${q.images.map(img => {
                     if (imageState[img]) {
-                        return \`<img src="./images/${encodeURI(img)}" class="draggable-item placed" style="left: ${imageState[img].x}%; top: ${imageState[img].y}%; transform: translate(-50%, -50%) scale(0.6);" data-id="${img}">\`;
+                        return `<img src="./images/${encodeURI(img)}" class="draggable-item placed" style="left: ${imageState[img].x}%; top: ${imageState[img].y}%; transform: translate(-50%, -50%) scale(0.6);" data-id="${img}">`;
                     }
                     return '';
                 }).join('')}
