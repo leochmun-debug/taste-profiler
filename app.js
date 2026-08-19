@@ -343,7 +343,7 @@ window.submitToFormspree = async function() {
     btn.disabled = true;
 
     // ⚠️ Waiting for the Formspree endpoint URL from the user
-    const FORMSPREE_ENDPOINT = 'YOUR_FORMSPREE_URL_HERE';
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeajvged';
 
     if (FORMSPREE_ENDPOINT === 'YOUR_FORMSPREE_URL_HERE') {
         alert("Please provide your Formspree endpoint URL to complete the integration.");
