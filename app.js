@@ -248,7 +248,7 @@ function renderQuestion(q) {
 
     screen.innerHTML = `
         ${getGlyph()}
-        <div class="subtitle font-secondary">a private design brief just for your</div>
+        <div class="subtitle font-secondary">a private design brief just for you, Jorge.</div>
         
         <div class="progress-header font-secondary">
             <span>${q.label}</span>
