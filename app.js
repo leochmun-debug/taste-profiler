@@ -70,6 +70,25 @@ const textQuestions = [
         options: ["CABAÑA AISLADA EN EL BOSQUE", "HOTEL BOUTIQUE EN EL CENTRO"],
         label: "leisure",
         prompt: "Para el fin de semana:"
+    },
+    {
+        id: 6,
+        type: "cartesian-map",
+        question: "",
+        images: [
+            "cabeza_venado.png",
+            "candelabro_gold.png",
+            "candelabro_plata.png",
+            "costco.png",
+            "gucci_maximalism.png",
+            "louboutin.png",
+            "louboutin_spikes.png",
+            "ramo_buchón.png",
+            "refri_recatado.png",
+            "refri_tele.png",
+            "t-shirt_moschino.png"
+        ],
+        label: "taste mapping"
     }
 ];
 
@@ -276,6 +295,51 @@ function renderQuestion(q) {
                 `).join('')}
             </div>
         `;
+    } else if (q.type === 'cartesian-map') {
+        const imageState = answers[q.id] || {}; 
+        const placedCount = Object.keys(imageState).filter(k => k !== '_completed').length;
+        const totalCount = q.images.length;
+        
+        let activeImage = null;
+        let allPlaced = placedCount >= totalCount;
+        for (let img of q.images) {
+            if (!imageState[img]) {
+                activeImage = img;
+                break;
+            }
+        }
+        
+        contentHtml = `
+            <div class="question-prompt font-primary">
+                ${q.question}
+            </div>
+            
+            <div class="cartesian-container" id="cartesian-map">
+                <div class="cartesian-axis-y"></div>
+                <div class="cartesian-axis-x"></div>
+                <div class="cartesian-label top">CARÍSIMO</div>
+                <div class="cartesian-label bottom">Económico</div>
+                <div class="cartesian-label left">NUEVO RICO</div>
+                <div class="cartesian-label right">CLASSY</div>
+                
+                ${q.images.map(img => {
+                    if (imageState[img]) {
+                        return \`<img src="./images/${encodeURI(img)}" class="draggable-item placed" style="left: ${imageState[img].x}%; top: ${imageState[img].y}%; transform: translate(-50%, -50%) scale(0.6);" data-id="${img}">\`;
+                    }
+                    return '';
+                }).join('')}
+            </div>
+            
+            <div class="drag-pool" id="drag-pool">
+                ${allPlaced ? `
+                    <button class="share-btn font-primary" style="margin-top:0;" onclick="currentState++; saveState(); render();">Continue</button>
+                ` : `
+                    <div class="drag-instruction" style="position:absolute; top: 10px; left: 0; width: 100%; text-align: center;">Drag onto map</div>
+                    <img src="./images/${encodeURI(activeImage)}" class="draggable-item" id="active-draggable" data-id="${activeImage}">
+                `}
+            </div>
+        `;
+        setTimeout(() => initCartesianDragAndDrop(q.id), 0);
     }
 
     screen.innerHTML = `
@@ -308,16 +372,25 @@ function renderCompletion() {
     screen.className = 'screen completion-screen';
     
     // Format answers for email
+    // We will inject the Formspree fetch logic into the DOM via onclick
     let emailBodyText = "Hello,\n\nHere are my design brief answers:\n\n";
     questions.forEach(q => {
         if (q.type === 'text') {
             emailBodyText += `Question: ${q.question}\nAnswer: ${answers[q.id]}\n\n`;
         } else if (q.type === 'image') {
             emailBodyText += `Image File: ${q.filename}\nAnswer: ${answers[q.id]}\n\n`;
+        } else if (q.type === 'image-choice') {
+            emailBodyText += `Question: ${q.prompt}\nAnswer: ${answers[q.id]}\n\n`;
+        } else if (q.type === 'cartesian-map') {
+            emailBodyText += `Cartesian Map Coordinates (X: 0=Nuevo Rico, 100=Classy / Y: 0=Carísimo, 100=Económico):\n`;
+            Object.keys(answers[q.id] || {}).forEach(img => {
+                 const coords = answers[q.id][img];
+                 emailBodyText += `- ${img}: (X: ${coords.x}%, Y: ${coords.y}%)\n`;
+            });
+            emailBodyText += `\n`;
         }
     });
     
-    // We will inject the Formspree fetch logic into the DOM via onclick
     window.emailBodyText = emailBodyText;
     
     screen.innerHTML = `
@@ -399,6 +472,105 @@ window.submitToFormspree = async function() {
         btn.disabled = false;
     }
 }
+
+window.initCartesianDragAndDrop = function(questionId) {
+    const map = document.getElementById('cartesian-map');
+    const dragItem = document.getElementById('active-draggable');
+    const placedItems = document.querySelectorAll('.draggable-item.placed');
+    const allDraggables = [];
+    if (dragItem) allDraggables.push(dragItem);
+    placedItems.forEach(i => allDraggables.push(i));
+    
+    if (!map) return;
+    
+    allDraggables.forEach(item => {
+        let isDragging = false;
+        let startX, startY;
+        
+        const startDrag = (e) => {
+            isDragging = true;
+            if (e.type === 'touchstart') {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            } else {
+                startX = e.clientX;
+                startY = e.clientY;
+            }
+            item.style.transition = 'none';
+            item.style.zIndex = 100;
+            
+            document.addEventListener('mousemove', doDrag);
+            document.addEventListener('touchmove', doDrag, {passive: false});
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+        };
+        
+        const doDrag = (e) => {
+            if (!isDragging) return;
+            e.preventDefault(); // Prevent scrolling on mobile
+            let clientX, clientY;
+            if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+            
+            if (item.classList.contains('placed')) {
+                 item.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.6)`;
+            } else {
+                 item.style.transform = `translate(${dx}px, ${dy}px)`;
+            }
+        };
+        
+        const endDrag = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            document.removeEventListener('mousemove', doDrag);
+            document.removeEventListener('touchmove', doDrag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchend', endDrag);
+            
+            const rect = item.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const mapRect = map.getBoundingClientRect();
+            
+            // Check if dropped inside map bounds (with a little leniency)
+            if (centerX >= mapRect.left - 20 && centerX <= mapRect.right + 20 && 
+                centerY >= mapRect.top - 20 && centerY <= mapRect.bottom + 20) {
+                
+                let px = ((centerX - mapRect.left) / mapRect.width) * 100;
+                let py = ((centerY - mapRect.top) / mapRect.height) * 100;
+                
+                px = Math.max(0, Math.min(100, px));
+                py = Math.max(0, Math.min(100, py));
+                
+                const imgId = item.dataset.id;
+                if (!answers[questionId]) {
+                    answers[questionId] = {};
+                }
+                answers[questionId][imgId] = { x: px.toFixed(1), y: py.toFixed(1) };
+                saveState();
+                render(); 
+            } else {
+                // Snap back
+                item.style.transition = 'transform 0.3s ease';
+                item.style.transform = item.classList.contains('placed') ? 'translate(-50%, -50%) scale(0.6)' : '';
+                item.style.zIndex = 10;
+            }
+        };
+        
+        item.addEventListener('mousedown', startDrag);
+        item.addEventListener('touchstart', startDrag, {passive: false});
+    });
+};
 
 // Start app
 document.addEventListener('DOMContentLoaded', init);

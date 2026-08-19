@@ -301,6 +301,105 @@ button.selected {
     text-align: center;
 }
 
+/* Cartesian Map */
+.cartesian-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    margin: 40px 0;
+    touch-action: none; /* Prevent scrolling while dragging */
+}
+
+/* Axes */
+.cartesian-axis-y {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--border-color);
+    transform: translateX(-50%);
+}
+
+.cartesian-axis-x {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    transform: translateY(-50%);
+}
+
+/* Labels */
+.cartesian-label {
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: "Andale Mono", Monaco, "Courier New", monospace;
+    text-transform: uppercase;
+}
+
+.cartesian-label.top {
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cartesian-label.bottom {
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cartesian-label.left {
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+.cartesian-label.right {
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+/* Draggable Items */
+.drag-pool {
+    width: 100%;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed var(--border-color);
+    margin-bottom: 20px;
+    position: relative;
+    touch-action: none;
+}
+
+.draggable-item {
+    position: absolute;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    cursor: grab;
+    z-index: 10;
+    transition: transform 0.1s;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.draggable-item.placed {
+    cursor: pointer;
+}
+
+.drag-instruction {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Andale Mono", Monaco, "Courier New", monospace;
+}
+
 .image-choice-btn.selected {
     background-color: var(--active-color) !important;
 }
