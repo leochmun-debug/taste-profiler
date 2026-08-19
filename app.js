@@ -352,8 +352,10 @@ function renderQuestion(q) {
         </div>
         <hr class="divider">
         
-        <div class="section-lead font-primary">
-            estas son algunas preguntas de preferencias<br>personales
+        <div class="section-lead font-primary" style="${q.type === 'cartesian-map' ? 'margin-bottom: 20px;' : ''}">
+            ${q.type === 'cartesian-map' ? 
+                'en este mapa<br>podrás elegir<br>poner las imágenes<br>donde lo prefieras<br>arrastrándolas' : 
+                'estas son algunas<br>preguntas de<br>preferencias<br>personales'}
         </div>
         
         ${contentHtml}
