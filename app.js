@@ -299,8 +299,8 @@ function renderCompletion() {
         }
     });
     
-    const payload = encodeURIComponent(emailBodyText);
-    const mailtoLink = `mailto:leo.ch.mun@gmail.com?subject=Taste%20Profiler%20Answers&body=${payload}`;
+    // We will inject the Formspree fetch logic into the DOM via onclick
+    window.emailBodyText = emailBodyText;
     
     screen.innerHTML = `
         <div class="completion-header font-primary">
@@ -324,17 +324,62 @@ function renderCompletion() {
              ${getGlyph().replace('class="top-glyph"', 'style="position: relative;"')}
         </div>
         
-        <a href="${mailtoLink}" style="text-decoration: none;">
-            <button class="share-btn font-primary">Send Answers via Email</button>
-        </a>
+        <button id="formspree-btn" class="share-btn font-primary" onclick="submitToFormspree()">Send Answers to Designer</button>
         
-        <div class="contact-info font-secondary">
+        <div class="contact-info font-secondary" style="margin-top: 20px;">
             contact info. leo.ch.mun@gmail.com<br>
             +52 2282 88 8275
         </div>
     `;
     
     appContainer.appendChild(screen);
+}
+
+// Formspree Integration Logic
+window.submitToFormspree = async function() {
+    const btn = document.getElementById('formspree-btn');
+    const originalText = btn.innerText;
+    btn.innerText = 'Sending...';
+    btn.disabled = true;
+
+    // ⚠️ Waiting for the Formspree endpoint URL from the user
+    const FORMSPREE_ENDPOINT = 'YOUR_FORMSPREE_URL_HERE';
+
+    if (FORMSPREE_ENDPOINT === 'YOUR_FORMSPREE_URL_HERE') {
+        alert("Please provide your Formspree endpoint URL to complete the integration.");
+        btn.innerText = originalText;
+        btn.disabled = false;
+        return;
+    }
+
+    try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                subject: "New Taste Profiler Submission",
+                answers: window.emailBodyText
+            })
+        });
+
+        if (response.ok) {
+            btn.innerText = 'Sent Successfully!';
+            btn.style.backgroundColor = 'var(--active-color)';
+            btn.style.color = '#000';
+            btn.style.border = '1px solid var(--border-color)';
+        } else {
+            alert('Oops! There was a problem submitting your form.');
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    } catch (error) {
+        alert('Oops! There was a problem submitting your form.');
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
 }
 
 // Start app
