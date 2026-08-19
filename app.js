@@ -39,13 +39,13 @@ const textQuestions = [
     {
         id: 2,
         type: "image-choice",
-        question: "supongamos que va a viajar a Roma mañana, ¿qué maleta ligera te llevas?",
+        question: "supongamos que vas a viajar a Roma mañana, ¿qué maleta ligera te llevas?",
         options: [
             { label: "MONT BLANC", value: "MONT BLANC", image: "./images/mont_blanc_brief_case.png" },
             { label: "PRADA", value: "PRADA", image: "./images/Leather_duffel_bag_Prada.png" }
         ],
         label: "travel preference",
-        prompt: "supongamos que va a viajar a Roma mañana, ¿qué maleta ligera te llevas?"
+        prompt: "supongamos que vas a viajar a Roma mañana, ¿qué maleta ligera te llevas?"
     },
     {
         id: 3,
