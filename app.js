@@ -31,13 +31,24 @@ const textQuestions = [
     {
         id: 1,
         type: "text",
-        question: "¿Qué marca es más de tu preferencia para un traje?",
+        question: "¿qué marca es más de tu preferencia si vas a usar un traje para una grad del Tec?",
         options: ["GUCCI", "HUGO BOSS"],
         label: "fashion",
-        prompt: "¿Qué marca es más de tu preferencia para un traje?"
+        prompt: "¿qué marca es más de tu preferencia si vas a usar un traje para una grad del Tec?"
     },
     {
         id: 2,
+        type: "image-choice",
+        question: "supongamos que va a viajar a Roma mañana, ¿qué maleta ligera te llevas?",
+        options: [
+            { label: "MONT BLANC", value: "MONT BLANC", image: "./images/mont_blanc_brief_case.png" },
+            { label: "PRADA", value: "PRADA", image: "./images/Leather_duffel_bag_Prada.png" }
+        ],
+        label: "travel preference",
+        prompt: "supongamos que va a viajar a Roma mañana, ¿qué maleta ligera te llevas?"
+    },
+    {
+        id: 3,
         type: "text",
         question: "¿Qué prefieres tratándose de tu automóvil?",
         options: ["JAPONÉS", "ALEMÁN"],
@@ -45,7 +56,7 @@ const textQuestions = [
         prompt: "¿Qué prefieres tratándose de tu automóvil?"
     },
     {
-        id: 3,
+        id: 4,
         type: "text",
         question: "¿En un viaje a Europa qué eliges?",
         options: ["LONDRES", "PARÍS"],
@@ -53,7 +64,7 @@ const textQuestions = [
         prompt: "¿En un viaje a Europa qué eliges?"
     },
     {
-        id: 4,
+        id: 5,
         type: "text",
         question: "Para el fin de semana:",
         options: ["CABAÑA AISLADA EN EL BOSQUE", "HOTEL BOUTIQUE EN EL CENTRO"],
@@ -130,9 +141,10 @@ window.selectOption = function(questionId, option) {
     saveState();
     
     // Add selected class to the clicked button for visual feedback
-    const buttons = document.querySelectorAll('.option-button');
+    const buttons = document.querySelectorAll('.option-button, .image-choice-btn');
     buttons.forEach(btn => {
-        if (btn.innerText.trim() === option) {
+        const value = btn.dataset.value || btn.innerText.trim();
+        if (value === option) {
             btn.classList.add('selected');
         }
     });
@@ -241,6 +253,26 @@ function renderQuestion(q) {
                 ${q.options.map(opt => `
                     <button class="option-button image-option font-primary ${answers[q.id] === opt ? 'selected' : ''}" 
                             onclick="selectOption(${q.id}, '${opt}')">${opt}</button>
+                `).join('')}
+            </div>
+        `;
+    } else if (q.type === 'image-choice') {
+        contentHtml = `
+            <div class="question-prompt font-primary">
+                ${q.prompt.split(' ').map(word => `<span>${word}</span>`).join(' ')}
+            </div>
+            <div class="options-container" style="flex-direction: row; gap: 10px; margin-top: 20px;">
+                ${q.options.map((opt) => `
+                    <div style="flex: 1; border: 1px solid var(--border-color); cursor: pointer; display: flex; flex-direction: column;" 
+                         class="image-choice-btn ${answers[q.id] === opt.value ? 'selected' : ''}" data-value="${opt.value}"
+                         onclick="selectOption(${q.id}, '${opt.value}')">
+                         <div style="flex: 1; padding: 10px; display: flex; align-items: center; justify-content: center; background-color: #fff;">
+                             <img src="${opt.image}" style="width: 100%; height: auto; max-height: 150px; object-fit: contain; display: block;">
+                         </div>
+                         <div class="font-primary label-text" style="text-align: center; padding: 10px; font-weight: bold; border-top: 1px solid var(--border-color); font-size: 12px;">
+                             ${opt.label}
+                         </div>
+                    </div>
                 `).join('')}
             </div>
         `;

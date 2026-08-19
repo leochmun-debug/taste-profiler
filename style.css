@@ -300,3 +300,7 @@ button.selected {
     color: var(--bg-color);
     text-align: center;
 }
+
+.image-choice-btn.selected {
+    background-color: var(--active-color) !important;
+}
