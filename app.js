@@ -45,7 +45,7 @@ const textQuestions = [
             { label: "PRADA", value: "PRADA", image: "./images/Leather_duffel_bag_Prada.png" }
         ],
         label: "travel preference",
-        prompt: "supongamos que vas a viajar a Roma mañana, ¿qué maleta ligera te llevas?"
+        prompt: "supongamos que vas a viajar<br>a Roma mañana,<br>¿qué maleta ligera te llevas?"
     },
     {
         id: 3,
@@ -83,7 +83,7 @@ const textQuestions = [
             "gucci_maximalism.png",
             "louboutin.png",
             "louboutin_spikes.png",
-            "ramo_buchón.png",
+            "ramo_buchon.png",
             "refri_recatado.png",
             "refri_tele.png",
             "t-shirt_moschino.png"
@@ -277,8 +277,8 @@ function renderQuestion(q) {
         `;
     } else if (q.type === 'image-choice') {
         contentHtml = `
-            <div class="question-prompt font-primary">
-                ${q.prompt.split(' ').map(word => `<span>${word}</span>`).join(' ')}
+            <div class="question-prompt font-primary" style="display: block; text-align: right; line-height: 1.3;">
+                ${q.prompt}
             </div>
             <div class="options-container" style="flex-direction: row; gap: 10px; margin-top: 20px;">
                 ${q.options.map((opt) => `
